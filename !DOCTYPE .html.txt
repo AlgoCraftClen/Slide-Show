@@ -1,0 +1,301 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>TCPA Bid Opening - Interactive Presentation</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=JetBrains+Mono:wght@500;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg-main: #020617;
+            --bg-script: #0f172a;
+            --accent: #fbbf24;
+            --text-main: #f8fafc;
+            --text-muted: #94a3b8;
+            --border: #1e293b;
+        }
+
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+
+        body {
+            background-color: #010409;
+            font-family: 'Urbanist', sans-serif;
+            height: 100vh;
+            display: flex;
+            flex-direction: column;
+            overflow: hidden;
+            color: var(--text-main);
+        }
+
+        .dashboard { display: flex; height: 100vh; width: 100vw; }
+
+        /* PRESENTER SIDE: LEFT */
+        .script-panel {
+            background-color: var(--bg-script);
+            width: 30%;
+            padding: 40px;
+            border-right: 4px solid var(--accent);
+            display: flex;
+            flex-direction: column;
+            box-shadow: 10px 0 30px rgba(0,0,0,0.5);
+            z-index: 10;
+        }
+
+        .script-header {
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+            letter-spacing: 2px;
+            margin-bottom: 20px;
+            text-transform: uppercase;
+            border-bottom: 1px solid var(--border);
+            padding-bottom: 10px;
+        }
+
+        .script-body {
+            color: var(--text-muted);
+            font-size: 17px;
+            line-height: 1.6;
+            font-style: italic;
+        }
+
+        .script-body strong { color: var(--text-main); font-style: normal; }
+        .script-body mark { background-color: #fbbf2433; color: var(--accent); padding: 0 4px; border-radius: 2px; }
+
+        /* AUDIENCE SIDE: RIGHT */
+        .audience-panel {
+            background-color: var(--bg-main);
+            width: 70%;
+            position: relative;
+            display: flex;
+            flex-direction: column;
+            padding: 60px 80px;
+        }
+
+        .slide {
+            display: none;
+            flex-direction: column;
+            height: 100%;
+            width: 100%;
+            z-index: 1;
+        }
+
+        .slide.active { display: flex; animation: fadeIn 0.3s ease-out; }
+
+        @keyframes fadeIn { from { opacity: 0; } to { opacity: 1; } }
+
+        h1 { font-size: 72px; color: var(--accent); margin-bottom: 10px; text-transform: uppercase; line-height: 1; }
+        .slide-title { font-size: 42px; color: var(--text-main); margin-bottom: 50px; border-left: 8px solid var(--accent); padding-left: 25px; text-transform: uppercase; letter-spacing: 2px; }
+
+        /* INPUT FIELDS - FIXED GHOSTING */
+        .price-container {
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+        }
+
+        .price-input {
+            background: rgba(255, 255, 255, 0.05);
+            border: 2px dashed var(--accent);
+            border-radius: 12px;
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 90px;
+            font-weight: 700;
+            padding: 20px 40px;
+            width: 650px;
+            text-align: center;
+            outline: none;
+        }
+
+        .price-input:focus { background: rgba(251, 191, 36, 0.1); border-style: solid; }
+
+        /* TABLES */
+        table { width: 100%; border-collapse: collapse; margin-top: 20px; background: #0f172a; }
+        th { background: #1e293b; color: var(--accent); text-align: left; padding: 20px; font-size: 16px; text-transform: uppercase; }
+        td { padding: 20px; border-bottom: 1px solid var(--border); color: var(--text-main); font-size: 22px; }
+
+        .summary-input {
+            background: transparent;
+            border: none;
+            border-bottom: 1px dashed var(--accent);
+            color: var(--accent);
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 22px;
+            font-weight: 700;
+            width: 100%;
+            outline: none;
+        }
+
+        /* NAVIGATION */
+        .nav-controls {
+            position: fixed;
+            bottom: 30px;
+            right: 80px;
+            display: flex;
+            gap: 15px;
+            background: rgba(15, 23, 42, 0.95);
+            padding: 12px 30px;
+            border-radius: 50px;
+            border: 1px solid var(--accent);
+            z-index: 1000;
+        }
+
+        .nav-btn {
+            background: transparent;
+            border: 1px solid var(--accent);
+            color: var(--accent);
+            padding: 8px 20px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-family: 'JetBrains Mono', monospace;
+            font-size: 14px;
+            font-weight: 700;
+        }
+
+        .nav-btn:hover { background: var(--accent); color: var(--bg-main); }
+        .nav-btn:disabled { opacity: 0.2; }
+        .slide-counter { color: var(--text-main); font-family: 'JetBrains Mono', monospace; align-self: center; margin: 0 10px; }
+
+        .watermark { position: absolute; bottom: 35px; left: 80px; color: var(--accent); opacity: 0.4; letter-spacing: 4px; text-transform: uppercase; font-size: 12px; font-weight: 700; }
+    </style>
+</head>
+<body>
+
+    <div class="dashboard">
+        <div class="script-panel">
+            <div class="script-header">Presenter Script</div>
+            <div id="scriptDisplay" class="script-body"></div>
+        </div>
+
+        <div class="audience-panel">
+            <!-- Slide 0 -->
+            <div class="slide active">
+                <div style="flex: 1; display: flex; flex-direction: column; justify-content: center; align-items: center; text-align: center;">
+                    <p style="color: var(--accent); letter-spacing: 6px; text-transform: uppercase; margin-bottom: 25px;">Tobolar Copra Processing Authority</p>
+                    <h1>Formal Bid Opening</h1>
+                    <p style="font-size: 24px; color: var(--text-muted);">Project: TCPA-2026-JB-001 | 107,000 JUTE SACKS</p>
+                    <p style="margin-top: 40px; font-family: 'JetBrains Mono'; color: var(--text-muted);">MAY 5, 2026</p>
+                </div>
+            </div>
+
+            <!-- Slide 1 -->
+            <div class="slide">
+                <h2 class="slide-title">Internal Committee</h2>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Patrick Langrine</h3><p>General Manager</p></div>
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Jonel Marshall</h3><p>Chief Procurement Officer</p></div>
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Lenie Sigman</h3><p>Chief Financial Officer</p></div>
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Regina Alberttar</h3><p>Operations Manager</p></div>
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Mison Levai</h3><p>Human Resources</p></div>
+                    <div style="background:#1e293b; padding:20px; border-left:4px solid var(--accent);"><h3>Clenny Minor</h3><p>Presiding Officer</p></div>
+                </div>
+            </div>
+
+            <!-- Slide 2 -->
+            <div class="slide">
+                <h2 class="slide-title">Adachi Corporation</h2>
+                <div class="price-container">
+                    <p style="font-size: 24px; color: var(--text-muted); margin-bottom: 20px;">TOTAL CIF MAJURO (USD)</p>
+                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()">
+                </div>
+            </div>
+
+            <!-- Slide 3 -->
+            <div class="slide">
+                <h2 class="slide-title">Infinity Supply LLC</h2>
+                <div class="price-container">
+                    <p style="font-size: 24px; color: var(--text-muted); margin-bottom: 20px;">TOTAL CIF MAJURO (USD)</p>
+                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()">
+                </div>
+            </div>
+
+            <!-- Slide 4 -->
+            <div class="slide">
+                <h2 class="slide-title">AGRIX Asia</h2>
+                <div class="price-container">
+                    <p style="font-size: 24px; color: var(--text-muted); margin-bottom: 20px;">TOTAL CIF MAJURO (USD)</p>
+                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()">
+                </div>
+            </div>
+
+            <!-- Slide 5 -->
+            <div class="slide">
+                <h2 class="slide-title">Holland Commodities</h2>
+                <div class="price-container">
+                    <p style="font-size: 24px; color: var(--text-muted); margin-bottom: 20px;">TOTAL CIF MAJURO (USD)</p>
+                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()">
+                </div>
+            </div>
+
+            <!-- Slide 6 -->
+            <div class="slide">
+                <h2 class="slide-title">Preliminary Price Log</h2>
+                <table>
+                    <thead>
+                        <tr><th>Bidder Name</th><th>CIF Majuro Price (USD)</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Adachi Corporation Ltd.</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()"></td></tr>
+                        <tr><td>Infinity Supply LLC</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()"></td></tr>
+                        <tr><td>AGRIX Asia</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()"></td></tr>
+                        <tr><td>Holland Commodities</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()"></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="watermark">tobolar copra processing authority</div>
+        </div>
+    </div>
+
+    <div class="nav-controls">
+        <button class="nav-btn" id="prevBtn" disabled>PREV</button>
+        <div class="slide-counter"><span id="currIdx">1</span> / 7</div>
+        <button class="nav-btn" id="nextBtn">NEXT</button>
+    </div>
+
+    <script>
+        const scripts = [
+            "<strong>Intro:</strong> Welcome to the bid opening for 107,000 Jute Sacks. This is recorded for transparency.",
+            "<strong>Committee:</strong> We have the GM, CPO, CFO, Ops, and HR present to witness the opening.",
+            "<strong>Adachi:</strong> Decrypting Adachi's bid. Recording price now.",
+            "<strong>Infinity:</strong> Decrypting Infinity's bid. Recording price now.",
+            "<strong>AGRIX:</strong> Decrypting AGRIX's bid. Recording price now.",
+            "<strong>Holland:</strong> Opening Holland's revised bid. Recording price now.",
+            "<strong>Log:</strong> This is the preliminary price summary. No award is made today; technical evaluation follows."
+        ];
+
+        const slides = document.querySelectorAll('.slide');
+        const scriptDisplay = document.getElementById('scriptDisplay');
+        const currIdxDisplay = document.getElementById('currIdx');
+        const prevBtn = document.getElementById('prevBtn');
+        const nextBtn = document.getElementById('nextBtn');
+        let idx = 0;
+
+        function update() {
+            slides.forEach((s, i) => s.classList.toggle('active', i === idx));
+            scriptDisplay.innerHTML = scripts[idx];
+            currIdxDisplay.innerText = idx + 1;
+            prevBtn.disabled = idx === 0;
+            nextBtn.disabled = idx === slides.length - 1;
+        }
+
+        prevBtn.addEventListener('click', () => { if(idx > 0) { idx--; update(); }});
+        nextBtn.addEventListener('click', () => { if(idx < slides.length - 1) { idx++; update(); }});
+        
+        document.addEventListener('keydown', (e) => {
+            if (e.target.tagName === 'INPUT') return;
+            if (e.key === 'ArrowRight' || e.key === ' ') nextBtn.click();
+            if (e.key === 'ArrowLeft') prevBtn.click();
+        });
+
+        update();
+    </script>
+</body>
+</html>
