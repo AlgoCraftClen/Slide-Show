@@ -75,8 +75,7 @@
                 <h2 class="slide-title">Bidder A: Adachi Corporation</h2>
                 <div class="price-container">
                     <div class="price-label">CIF Majuro Total Price (USD)</div>
-                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()" data-bidder="adachi">
-                    <button class="lock-btn" onclick="lockPrice(this)">Lock Price</button>
+                    <input type="text" class="price-input" value="$ 300,894.00" data-bidder="adachi" disabled>
                     <div class="unlock-panel" data-unlock="adachi">
                         <button type="button" class="unlock-btn" onclick="unlockPdf('adachi')">Unlock Bid Packet</button>
                         <a class="pdf-link" href="TCPA-2026-JB-001-ADACHI-0421.pdf" target="_blank" rel="noopener" download>Open Adachi PDF</a>
@@ -92,8 +91,7 @@
                 <h2 class="slide-title">Bidder B: Infinity Supply LLC</h2>
                 <div class="price-container">
                     <div class="price-label">CIF Majuro Total Price (USD)</div>
-                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()" data-bidder="infinity">
-                    <button class="lock-btn" onclick="lockPrice(this)">Lock Price</button>
+                    <input type="text" class="price-input" value="$ 273,000.00" data-bidder="infinity" disabled>
                     <div class="unlock-panel" data-unlock="infinity">
                         <button type="button" class="unlock-btn" onclick="unlockPdf('infinity')">Unlock Bid Packet</button>
                         <a class="pdf-link" href="TCPA-2026-JB-001-INFINITY-0422.pdf" target="_blank" rel="noopener" download>Open Infinity PDF</a>
@@ -109,8 +107,7 @@
                 <h2 class="slide-title">Bidder C: AGRIX Asia</h2>
                 <div class="price-container">
                     <div class="price-label">CIF Majuro Total Price (USD)</div>
-                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()" data-bidder="agrix">
-                    <button class="lock-btn" onclick="lockPrice(this)">Lock Price</button>
+                    <input type="text" class="price-input" value="$ 159,430.00" data-bidder="agrix" disabled>
                     <div class="unlock-panel" data-unlock="agrix">
                         <button type="button" class="unlock-btn" onclick="unlockPdf('agrix')">Unlock Bid Packet</button>
                         <a class="pdf-link" href="TCPA-2026-JB-001-AGRIX-0423.pdf" target="_blank" rel="noopener" download>Open AGRIX PDF</a>
@@ -126,8 +123,7 @@
                 <h2 class="slide-title">Bidder D: Holland Commodities</h2>
                 <div class="price-container">
                     <div class="price-label">CIF Majuro Total Price (USD)</div>
-                    <input type="text" class="price-input" value="$ 0.00" onfocus="this.select()" data-bidder="holland">
-                    <button class="lock-btn" onclick="lockPrice(this)">Lock Price</button>
+                    <input type="text" class="price-input" value="$ 197,950.00" data-bidder="holland" disabled>
                     <div class="unlock-panel" data-unlock="holland">
                         <button type="button" class="unlock-btn" onclick="unlockPdf('holland')">Unlock Revised File</button>
                         <a class="pdf-link" href="TCPA-2026-JB-001-HOLLAND-0424.pdf" target="_blank" rel="noopener" download>Open Holland PDF</a>
@@ -146,10 +142,10 @@
                         <tr><th>Bidder Name</th><th>CIF Majuro Price (USD)</th><th>Verdict</th><th>Lock</th></tr>
                     </thead>
                     <tbody>
-                        <tr><td>Adachi Corporation Ltd.</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()" data-bidder="adachi"></td><td class="verdict verdict-responsive">Responsive</td><td><button class="lock-btn" onclick="lockPrice(this)">Lock</button></td></tr>
-                        <tr><td>Infinity Supply LLC</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()" data-bidder="infinity"></td><td class="verdict verdict-responsive">Responsive</td><td><button class="lock-btn" onclick="lockPrice(this)">Lock</button></td></tr>
-                        <tr><td>AGRIX Asia</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()" data-bidder="agrix"></td><td class="verdict verdict-responsive">Responsive</td><td><button class="lock-btn" onclick="lockPrice(this)">Lock</button></td></tr>
-                        <tr><td>Holland Commodities</td><td><input type="text" class="summary-input" value="$ 0.00" onfocus="this.select()" data-bidder="holland"></td><td class="verdict verdict-provisional">Provisional</td><td><button class="lock-btn" onclick="lockPrice(this)">Lock</button></td></tr>
+                        <tr><td>Adachi Corporation Ltd.</td><td><input type="text" class="summary-input" value="$ 300,894.00" data-bidder="adachi" disabled></td><td class="verdict verdict-responsive">Responsive</td><td>🔒</td></tr>
+                        <tr><td>Infinity Supply LLC</td><td><input type="text" class="summary-input" value="$ 273,000.00" data-bidder="infinity" disabled></td><td class="verdict verdict-responsive">Responsive</td><td>🔒</td></tr>
+                        <tr><td>AGRIX Asia</td><td><input type="text" class="summary-input" value="$ 159,430.00" data-bidder="agrix" disabled></td><td class="verdict verdict-responsive">Responsive</td><td>🔒</td></tr>
+                        <tr><td>Holland Commodities</td><td><input type="text" class="summary-input" value="$ 197,950.00" data-bidder="holland" disabled></td><td class="verdict verdict-provisional">Provisional</td><td>🔒</td></tr>
                     </tbody>
                 </table>
             </div>
