@@ -46,62 +46,7 @@ function update() {
 prevBtn.addEventListener('click', () => { if (index > 0) { index--; update(); } });
 nextBtn.addEventListener('click', () => { if (index < slides.length - 1) { index++; update(); } });
 
-// ── PDF Unlock Map ──
-const pdfUnlockMap = {
-    adachi:   { file: "TCPA-2026-JB-001-ADACHI-0421.pdf",   name: "Adachi Corporation",  status: "DECRYPTED LIVE", password: "ADACHI2026"   },
-    infinity: { file: "TCPA-2026-JB-001-INFINITY-0422.pdf",  name: "Infinity Supply LLC",  status: "DECRYPTED LIVE", password: "INFINITY2026" },
-    agrix:    { file: "TCPA-2026-JB-001-AGRIX-0423.pdf",     name: "AGRIX Asia",           status: "DECRYPTED LIVE", password: "AGRIX2026"    },
-    holland:  { file: "TCPA-2026-JB-001-HOLLAND-0424.pdf",   name: "Holland Commodities",  status: "DECRYPTED LIVE", password: "HOLLAND2026"  }
-};
 
-// ── Apply PDF unlock to the DOM (shared by unlock + restore) ──
-function applyPdfUnlock(key) {
-    const record = pdfUnlockMap[key];
-    if (!record) return;
-
-    const panel = document.querySelector(`[data-unlock="${key}"]`);
-    if (!panel) return;
-
-    const unlockBtn = panel.querySelector('.unlock-btn');
-    if (unlockBtn) unlockBtn.style.display = 'none';
-
-    const link = panel.querySelector('.pdf-link');
-    if (link) {
-        link.href = record.file;
-        link.style.display = 'inline-flex';
-    }
-
-    const status = panel.closest('.slide').querySelector('.status-note');
-    if (status) {
-        status.innerHTML = `<i class="fa-solid fa-lock-open"></i> STATUS: ${record.status}`;
-    }
-}
-
-// ── Unlock PDF Bid Packet (persists to localStorage) ──
-function unlockPdf(key) {
-    const record = pdfUnlockMap[key];
-    if (!record) return;
-
-    const password = prompt(`Enter password for ${record.name} bid packet`);
-    if (password === null) return;
-    if (!password.trim()) return alert("Password is required to unlock the bid packet.");
-    if (password !== record.password) return alert("Incorrect password. Access denied.");
-
-    applyPdfUnlock(key);
-
-    // Save unlock state permanently
-    const unlocked = JSON.parse(localStorage.getItem('tcpa_unlocked_pdfs') || '[]');
-    if (!unlocked.includes(key)) {
-        unlocked.push(key);
-        localStorage.setItem('tcpa_unlocked_pdfs', JSON.stringify(unlocked));
-    }
-}
-
-// ── Restore unlocked PDFs from localStorage on page load ──
-function restoreUnlockedPdfs() {
-    const unlocked = JSON.parse(localStorage.getItem('tcpa_unlocked_pdfs') || '[]');
-    unlocked.forEach(key => applyPdfUnlock(key));
-}
 
 // ── Lock Price (persists to localStorage) ──
 function lockPrice(button) {
@@ -167,5 +112,5 @@ document.addEventListener('keydown', (e) => {
 
 // ── Init ──
 restoreLockedPrices();
-restoreUnlockedPdfs();
+
 update();
