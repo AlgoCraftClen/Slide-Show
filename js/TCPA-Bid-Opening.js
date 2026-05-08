@@ -23,7 +23,9 @@ const scripts = [
 
     "<strong>Summary Log:</strong> This is a summary of the prices recorded. Please note these are <mark>preliminary</mark> and subject to full technical evaluation (L2 Weighted Scale) by the committee.",
 
-    "<strong>Conclusion:</strong> This concludes the formal bid opening. Expect a <mark>Notice of Intent to Award</mark> in 10 to 14 days. This meeting is adjourned. Kommol tata."
+    "<strong>Conclusion:</strong> This concludes the formal bid opening. Expect a <mark>Notice of Intent to Award</mark> in 10 to 14 days. This meeting is adjourned. Kommol tata.",
+
+    "<strong>Evaluation Final Score:</strong> This is the Evaluation Final Score matrix. As a reminder, we require a live video measurement to verify the 1.2m length. If the low-priced bags from AGRIX fail this test on camera, they lose their lead."
 ];
 
 // ── DOM References ──
@@ -108,6 +110,21 @@ document.addEventListener('keydown', (e) => {
     if (e.target.tagName === 'INPUT') return;
     if (e.key === 'ArrowRight' || e.key === ' ' || e.key === 'PageDown') { nextBtn.click(); }
     if (e.key === 'ArrowLeft' || e.key === 'PageUp') { prevBtn.click(); }
+});
+
+// ── Video Verification Scoring (auto calculate total) ──
+const videoInputs = document.querySelectorAll('.video-input');
+const finalTotals = document.querySelectorAll('.final-total');
+
+videoInputs.forEach((input, index) => {
+    input.addEventListener('input', () => {
+        const baseScore = parseFloat(input.dataset.base) || 0;
+        const videoScore = parseFloat(input.value) || 0;
+        const total = baseScore + videoScore;
+        if (finalTotals[index]) {
+            finalTotals[index].value = total.toFixed(2);
+        }
+    });
 });
 
 // ── Init ──

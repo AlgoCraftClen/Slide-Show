@@ -8,7 +8,7 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Urbanist:wght@400;600;700&family=JetBrains+Mono:wght@500;700&swap" rel="stylesheet">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
-    <link rel="stylesheet" href="TCPA-Bid-Opening.css">
+    <link rel="stylesheet" href="css/TCPA-Bid-Opening.css">
 </head>
 <body>
 
@@ -158,6 +158,24 @@
                 </div>
             </div>
 
+            <!-- Slide 11: Evaluation Final Score -->
+            <div class="slide">
+                <h2 class="slide-title">Evaluation Final Score</h2>
+                <table>
+                    <thead>
+                        <tr><th>Evaluation Criteria</th><th>Max</th><th>AGRIX Asia</th><th>Adachi Corp</th><th>Infinity</th><th>Holland</th></tr>
+                    </thead>
+                    <tbody>
+                        <tr><td>Financial Score (60%)</td><td>60</td><td>60.00</td><td>31.79</td><td>35.04</td><td>48.32</td></tr>
+                        <tr><td>Documentary Specs</td><td>10</td><td>10.00</td><td>10.00</td><td>5.00</td><td>0.00</td></tr>
+                        <tr><td>Delivery Commitment</td><td>10</td><td>10.00</td><td>10.00</td><td>10.00</td><td>5.00</td></tr>
+                        <tr><td>Statutory Reliability</td><td>5</td><td>3.00</td><td>5.00</td><td>4.00</td><td>3.00</td></tr>
+                        <tr><td>Video Verification</td><td>15</td><td><input type="number" class="summary-input video-input" data-base="83" placeholder="(TBD)" min="0" max="15"></td><td><input type="number" class="summary-input video-input" data-base="56.79" placeholder="(TBD)" min="0" max="15"></td><td><input type="number" class="summary-input video-input" data-base="54.04" placeholder="(TBD)" min="0" max="15"></td><td><input type="number" class="summary-input video-input" data-base="56.32" placeholder="(TBD)" min="0" max="15"></td></tr>
+                        <tr style="font-weight: bold; background-color: rgba(255, 255, 255, 0.05);"><td>FINAL TOTAL</td><td>100</td><td><input type="text" class="summary-input final-total" value="83.00" disabled></td><td><input type="text" class="summary-input final-total" value="56.79" disabled></td><td><input type="text" class="summary-input final-total" value="54.04" disabled></td><td><input type="text" class="summary-input final-total" value="56.32" disabled></td></tr>
+                    </tbody>
+                </table>
+            </div>
+
             <div class="watermark">tobolar copra processing authority</div>
         </div>
     </div>
@@ -165,10 +183,10 @@
     <!-- NAVIGATION CONTROLS -->
     <div class="nav-controls">
         <button class="nav-btn" id="prevBtn" disabled>PREVIOUS</button>
-        <div class="slide-counter"><span id="currIdx">1</span> / 10</div>
+        <div class="slide-counter"><span id="currIdx">1</span> / 11</div>
         <button class="nav-btn" id="nextBtn">NEXT SLIDE</button>
     </div>
 
-    <script src="TCPA-Bid-Opening.js"></script>
+    <script src="js/TCPA-Bid-Opening.js"></script>
 </body>
 </html>
