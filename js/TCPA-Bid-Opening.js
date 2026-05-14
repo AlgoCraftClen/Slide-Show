@@ -26,7 +26,8 @@ const scripts = [
     "<strong>Conclusion:</strong> This concludes the formal bid opening. Expect a <mark>Notice of Intent to Award</mark> in 10 to 14 days. This meeting is adjourned. Kommol tata.",
 
     "<strong>Evaluation Final Score:</strong> This is the Evaluation Final Score matrix. As a reminder, we require a live video measurement to verify the 1.2m length. If the low-priced bags from AGRIX fail this test on camera, they lose their lead.",
-    "<strong>Master Packet:</strong> This slide contains the Tobolar Evaluation Committee Master Packet, detailing the evaluation agenda, competitive landscape, and key legal and operational talking points."
+    "<strong>Master Packet:</strong> This slide contains the Tobolar Evaluation Committee Master Packet, detailing the evaluation agenda, competitive landscape, and key legal and operational talking points.",
+    "<strong>Product Examination:</strong> We will now review the submitted video evidence to examine the product for quality, size, and other physical requirements."
 ];
 
 // ── DOM References ──
